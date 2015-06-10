@@ -6,7 +6,17 @@ public class Hippodrome {
     ArrayList<Horse>horses = new ArrayList<Horse>();
     public static Hippodrome game;
 
-    public void run(){}
+    public void run(){
+        for(int i=1;i<101;i++){
+            move();
+            print();
+            try  {
+                Thread.sleep(500);
+            }catch (InterruptedException e){
+                System.out.println("Забег прерван");
+            }
+        }
+    }
 
     public void move(){}
 
