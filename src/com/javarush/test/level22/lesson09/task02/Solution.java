@@ -13,6 +13,15 @@ import java.util.Map;
 public class Solution {
 
     public static StringBuilder getCondition(Map<String, String> params) {
+        StringBuilder str = new StringBuilder();
+        for(Map.Entry<String,String> pair : params.entrySet()){
+            String x = pair.getKey();
+            String y = pair.getValue();
+            if(y!=null){
+                str=str.append(x);
+            }
+        }
+
         return null;
     }
 }
