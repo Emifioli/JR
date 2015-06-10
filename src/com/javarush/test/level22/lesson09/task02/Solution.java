@@ -13,20 +13,26 @@ import java.util.Map;
 public class Solution {
 
     public static StringBuilder getCondition(Map<String, String> params) {
+
         StringBuilder str = new StringBuilder();
-        int i=0;
-        for(Map.Entry<String,String> pair : params.entrySet()){
-            String x = pair.getKey();
-            String y = pair.getValue();
-            if(y!=null){
-                if(i!=params.size()-1)
-                str.append(x + " = " + "'" + y + "'" + " and ");
-                else str.append(x + " = " + "'" + y + "'");
-
+            if(params!=null)
+            {
+                int i = 0;
+                for (Map.Entry<String, String> pair : params.entrySet())
+                {
+                    ++i;
+                    String x = pair.getKey();
+                    String y = pair.getValue();
+                    if (y != null && x != null){
+                        str.append(x + " = " + "'" + y + "' and ");
+                    }
+                    if (params.size() == i && str.length() > 0){
+                        int a = str.length() - 5;
+                        int b = str.length();
+                        str.delete(a, b);
+                    }
+                }
             }
-            ++i;
-        }
-
         return str;
     }
 }
