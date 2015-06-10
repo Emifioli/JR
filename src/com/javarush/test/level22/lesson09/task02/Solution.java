@@ -14,14 +14,19 @@ public class Solution {
 
     public static StringBuilder getCondition(Map<String, String> params) {
         StringBuilder str = new StringBuilder();
+        int i=0;
         for(Map.Entry<String,String> pair : params.entrySet()){
             String x = pair.getKey();
             String y = pair.getValue();
             if(y!=null){
-                str=str.append(x);
+                if(i!=params.size()-1)
+                str.append(x + " = " + "'" + y + "'" + " and ");
+                else str.append(x + " = " + "'" + y + "'");
+
             }
+            ++i;
         }
 
-        return null;
+        return str;
     }
 }
