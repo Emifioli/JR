@@ -6,6 +6,12 @@ public class Hippodrome {
     ArrayList<Horse>horses = new ArrayList<Horse>();
     public static Hippodrome game;
 
+    public void run(){}
+
+    public void move(){}
+
+    public void print(){}
+
     public ArrayList<Horse> getHorses()  {
         return horses;
     }
