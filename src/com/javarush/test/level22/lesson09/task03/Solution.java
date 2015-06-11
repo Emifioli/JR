@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /* Составить цепочку слов
 В методе main считайте с консоли имя файла, который содержит слова, разделенные пробелом.
@@ -36,13 +37,17 @@ public class Solution {
         for(int i=0;i<list.size();i++){
             y[i]=list.get(i);
         }
-
         StringBuilder result = getLine(y);
         System.out.println(result.toString());
 
     }
 
     public static StringBuilder getLine(String... words) {
+        if (words == null || words.length == 0)
+            return new StringBuilder();
+        if (words[0].equals(""))
+            return new StringBuilder(words[0]);
+
           StringBuilder x = new StringBuilder();
           for(int i=0;i<words.length;i++){
                for(int k=words.length-1;k>i;k--){
