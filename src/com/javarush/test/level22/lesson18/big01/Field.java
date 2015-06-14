@@ -31,9 +31,10 @@ public class Field {
         for(int k=0;k<height;k++) {
             for (int i = 0; i < width; i++)
             {
-                if(getValue(i,k)==0)
+             //   if(getValue(i,k)==0)
+             //    er.append(".");
+             //   else er.append("X");
                 er.append(".");
-                else er.append("X");
             }
             er.append("\n");
         }
