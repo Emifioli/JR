@@ -19,4 +19,20 @@ public class Figure {
     {
         return matrix;
     }
+
+    public void left(){}
+
+    public void right(){}
+
+    public void down(){}
+
+    public void up(){}
+
+    public void downMaximum(){}
+
+    public boolean isCurrentPositionAvailable(){
+        return false;
+    }
+
+    public void landed(){}
 }
