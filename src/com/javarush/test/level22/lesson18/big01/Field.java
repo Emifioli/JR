@@ -19,4 +19,15 @@ public class Field {
     {
         return matrix;
     }
+
+    public void print(){}
+
+    public void removeFullLines(){}
+
+    public Integer getValue(int x, int y){
+        return matrix[y][x];
+    }
+    void setValue(int x, int y, int value){
+        matrix[y][x]=value;
+    }
 }
