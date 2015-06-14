@@ -26,7 +26,9 @@ public class Field {
         return matrix;
     }
 
-    public void print(){}
+    public void print(){
+
+    }
 
     public void removeFullLines(){}
 
