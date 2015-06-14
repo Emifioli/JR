@@ -5,6 +5,13 @@ public class Figure {
     int y;
     int[][]matrix;
 
+    public Figure(int x, int y, int[][] matrix)
+    {
+        this.x = x;
+        this.y = y;
+        this.matrix = matrix;
+    }
+
     public int getX()
     {
         return x;
@@ -35,4 +42,7 @@ public class Figure {
     }
 
     public void landed(){}
+
+    public void rotate()  {
+    }
 }

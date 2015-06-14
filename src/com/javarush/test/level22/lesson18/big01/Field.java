@@ -5,6 +5,12 @@ public class Field {
     int height;
     int[][]matrix;
 
+    public Field(int width, int height)
+    {
+        this.width = width;
+        this.height = height;
+    }
+
     public int getWidth()
     {
         return width;
