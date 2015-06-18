@@ -60,14 +60,22 @@ public class Solution {
                     Date d2 = (Date)stock2.get("date");
                     Calendar c1 = Calendar.getInstance();
                     Calendar c2 = Calendar.getInstance();
-                    c1.setTime(d1);c2.setTime(d2);
+                    c1.setTime(d1);
+                    c2.setTime(d2);
                     GregorianCalendar gc1=new GregorianCalendar(c1.get(Calendar.YEAR),c1.get(Calendar.MONTH),c1.get(Calendar.DAY_OF_MONTH));
                     GregorianCalendar gc2=new GregorianCalendar(c2.get(Calendar.YEAR),c2.get(Calendar.MONTH),c2.get(Calendar.DAY_OF_MONTH));
-                    int zxc = gc1.compareTo(gc2);
+                    int zxc = gc2.compareTo(gc1);
                     if(zxc==0){
-                        Integer one = (Integer)(stock1.get("last"))-(Integer)(stock1.get("open"));
-                        Integer two = (Integer)(stock2.get("last"))-(Integer)(stock2.get("open"));
-                        return one.compareTo(two);
+                        if(stock1.containsKey("last"))
+                        {
+                            Double one = (Double) (stock1.get("last")) - (Double) (stock1.get("open"));
+                            Double two = (Double) (stock2.get("last")) - (Double) (stock2.get("open"));
+                            return two.compareTo(one);
+                        }else {
+                            Double one = (Double) (stock1.get("change"));
+                            Double two = (Double) (stock2.get("change"));
+                            return two.compareTo(one);
+                        }
                     }else return zxc;
                 }
                 else return ret;
@@ -103,8 +111,8 @@ public class Solution {
         stocks.add(new Stock("Fake Level 3 Communications, Inc.", "LVLT", 5.55, 5.54));
         stocks.add(new Stock("Fake Microsoft Corporation", "MSFT", 29.56, 29.72));
 
-        stocks.add(new Stock("Fake Nokia Corporation (ADR)", "NOK", .1, getRandomDate()));
-        stocks.add(new Stock("Fake Oracle Corporation", "ORCL", .15, getRandomDate()));
+        stocks.add(new Stock("Fake Oracle Corporation", "NOK", .1, new Date()));
+        stocks.add(new Stock("Fake Oracle Corporation", "ORCL", .15, new Date()));
         stocks.add(new Stock("Fake Starbucks Corporation", "SBUX", .03, getRandomDate()));
         stocks.add(new Stock("Fake Yahoo! Inc.", "YHOO", .32, getRandomDate()));
         stocks.add(new Stock("Fake Applied Materials, Inc.", "AMAT", .26, getRandomDate()));
