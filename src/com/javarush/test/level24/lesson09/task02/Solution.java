@@ -111,7 +111,7 @@ public class Solution {
         stocks.add(new Stock("Fake Level 3 Communications, Inc.", "LVLT", 5.55, 5.54));
         stocks.add(new Stock("Fake Microsoft Corporation", "MSFT", 29.56, 29.72));
 
-        stocks.add(new Stock("Fake Oracle Corporation", "NOK", .1, new Date()));
+        stocks.add(new Stock("Fake Nokia Corporation", "NOK", .1, new Date()));
         stocks.add(new Stock("Fake Oracle Corporation", "ORCL", .15, new Date()));
         stocks.add(new Stock("Fake Starbucks Corporation", "SBUX", .03, getRandomDate()));
         stocks.add(new Stock("Fake Yahoo! Inc.", "YHOO", .32, getRandomDate()));
