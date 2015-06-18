@@ -1,14 +1,15 @@
 package com.javarush.test.level22.lesson18.big01;
 
 public class Field {
-    int width;
-    int height;
+    private int width;
+    private int height;
     int[][]matrix;
 
     public Field(int width, int height)
     {
         this.width = width;
         this.height = height;
+        this.matrix = new int[width][height];
     }
 
     public int getWidth()
@@ -29,12 +30,10 @@ public class Field {
     public void print(){
         StringBuilder er = new StringBuilder();
         for(int k=0;k<height;k++) {
-            for (int i = 0; i < width; i++)
-            {
-             //   if(getValue(i,k)==0)
-             //    er.append(".");
-             //   else er.append("X");
-                er.append(".");
+            for (int i = 0; i < width; i++)  {
+               if(getValue(k,i)==0)
+                   er.append(".");
+               else er.append("X");
             }
             er.append("\n");
         }
