@@ -32,7 +32,7 @@ public class Solution {
         String[] filepart = {"closed {4}", "open {2} and last {3}"};
 
         ChoiceFormat fileform = new ChoiceFormat(filelimits, filepart);
-        Format[] testFormats = {null, dateFormat, fileform};
+        Format[] testFormats = {null, null, dateFormat, fileform};
         MessageFormat pattform = new MessageFormat("{0}   {1} | {5} {6}");
         pattform.setFormats(testFormats);
 
@@ -62,7 +62,7 @@ public class Solution {
                     Calendar c2 = Calendar.getInstance();
                     c1.setTime(d1);c2.setTime(d2);
                     GregorianCalendar gc1=new GregorianCalendar(c1.get(Calendar.YEAR),c1.get(Calendar.MONTH),c1.get(Calendar.DAY_OF_MONTH));
-                    GregorianCalendar gc2=new GregorianCalendar(c1.get(Calendar.YEAR),c1.get(Calendar.MONTH),c1.get(Calendar.DAY_OF_MONTH));
+                    GregorianCalendar gc2=new GregorianCalendar(c2.get(Calendar.YEAR),c2.get(Calendar.MONTH),c2.get(Calendar.DAY_OF_MONTH));
                     int zxc = gc1.compareTo(gc2);
                     if(zxc==0){
                         Integer one = (Integer)(stock1.get("last"))-(Integer)(stock1.get("open"));
