@@ -19,15 +19,13 @@ id productName price quantity
 Данные дополнены пробелами до их длины
 
 Пример:
-19846   Шорты пляжные синие           159.00  1233
+19846   Шорты пляжные синие           159.00  1221
 198478  Шорты пляжные черные с рисунко173.00  1755
 19847983Куртка для сноубордистов, разм10173.991234
 */
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.RandomAccessFile;
+import java.io.*;
+import java.util.ArrayList;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
@@ -38,98 +36,78 @@ public class Solution {
             String s = ""; //для чтения файла
             int asq = Integer.parseInt(args[1]);//парсим номер строки
 
-          if(args[0].equals("-u")){
-              //делаем строку из аргументов
-              String repl = "";
-              for(int i=2;i<args.length;i++){
-                  try {
-                      Double pa = Double.parseDouble(args[i]);
-                      if(repl.length()>30)repl=repl.substring(0,30);
-                      while (repl.length()<30){
-                          repl+=" ";
-                      }
-                      //цена
-                      String ptr = pa.toString();
-                      if(ptr.length()>8)   {
-                          System.out.println("Ошибка длинны аргумента");
-                          throw new IOException();
-                      }
-                      while (ptr.length()<8){
-                          ptr+=" ";
-                      }
-                      repl+=ptr;
-                      //кол-во
-                      ++i;
-                      String ptr2 = args[i];
-                      if(ptr2.length()>4){
-                          System.out.println("Ошибка длинны аргумента");
-                          throw new IOException();
-                      }
-                      while (ptr2.length()<4){
-                          ptr2+=" ";
-                      }
-                      repl+=ptr2;
-                  }catch (NumberFormatException e){
-                      if(i==2) repl+=args[i];
-                      else  repl+=" "+args[i];
-                  }
-              }
+            if(args[0].equals("-u")){
+                //делаем строку из аргументов
+                String repl = "";
+                for(int i=2;i<args.length;i++){
+                    try {
+                        Double pa = Double.parseDouble(args[i]);
+                        if(repl.length()>30)repl=repl.substring(0,30);
+                        while (repl.length()<30){
+                            repl+=" ";
+                        }
+                        //цена
+                        String ptr = pa.toString();
+                        if(ptr.length()>8)   {
+                            System.out.println("Ошибка длинны аргумента");
+                            throw new IOException();
+                        }
+                        while (ptr.length()<8){
+                            ptr+=" ";
+                        }
+                        repl+=ptr;
+                        //кол-во
+                        ++i;
+                        String ptr2 = args[i];
+                        if(ptr2.length()>4){
+                            System.out.println("Ошибка длинны аргумента");
+                            throw new IOException();
+                        }
+                        while (ptr2.length()<4){
+                            ptr2+=" ";
+                        }
+                        repl+=ptr2;
+                    }catch (NumberFormatException e){
+                        if(i==2) repl+=args[i];
+                        else  repl+=" "+args[i];
+                    }
+                }
 
-              while ( (s=raf.readLine())!=null){
-                      try  {
-                          String id = s.substring(0, 8);
-                          id = id.trim();
-                          int num = Integer.parseInt(id);
-                          if (num == asq)  {
-                              raf.seek(raf.getFilePointer() - 44);
-                              raf.write(repl.getBytes());
-                          }
-                      }catch (NumberFormatException e){
-                      }catch (StringIndexOutOfBoundsException e){}
-
-              }
-          }
-            if(args[0].equals("-d")){
-                int xx = 0;
                 while ( (s=raf.readLine())!=null){
                     try  {
                         String id = s.substring(0, 8);
                         id = id.trim();
                         int num = Integer.parseInt(id);
                         if (num == asq)  {
-                            ++xx;  }
+                            raf.seek(raf.getFilePointer() - 44);
+                            raf.write(repl.getBytes());
+                        }
                     }catch (NumberFormatException e){
                     }catch (StringIndexOutOfBoundsException e){}
-                }
-                for(int i=0;i<xx;i++){
-                    RandomAccessFile delLine = new RandomAccessFile(name, "rw");
-                    long qwa = 0;
-                    String ws;
-                    while ( (ws=delLine.readLine())!=null)  {
-                        long length = delLine.getFilePointer()-qwa;
-                        try  {
-                            String id = ws.substring(0, 8);
-                            id = id.trim();
-                            int num = Integer.parseInt(id);
-                            if (num == asq)
-                            {
-                                byte buffer[] = new byte[4444];
-                                int read = -1;
-                                while ((read = delLine.read(buffer)) > -1)
-                                {
-                                    delLine.seek(delLine.getFilePointer() - read - length);
-                                    delLine.write(buffer, 0, read);
-                                    delLine.seek(delLine.getFilePointer() + length);
 
-                                }
-                                delLine.setLength(delLine.length() - length);
-                            }
-                            qwa = delLine.getFilePointer();
-                        }catch (NumberFormatException e){
-                        }catch (StringIndexOutOfBoundsException e){}
-                    }
-                    delLine.close();
                 }
+            }
+            if(args[0].equals("-d")){
+                ArrayList<String> list = new ArrayList<>();
+                while ( (s=raf.readLine())!=null){
+                    try  {
+                        String id = s.substring(0, 8);
+                        id = id.trim();
+                        int num = Integer.parseInt(id);
+                        if (num != asq)  {
+                           byte x[] = s.getBytes("ISO-8859-1");
+                            String bgf = new String(x);
+                            list.add(bgf);
+                        }
+                    }catch (NumberFormatException e){
+                    }catch (StringIndexOutOfBoundsException e){}
+
+                }
+                PrintWriter x = new PrintWriter(new File(name));
+                for(String as : list)   {
+                    x.println(as);
+                }
+                x.close();
             }
 
         }
