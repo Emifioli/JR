@@ -69,7 +69,6 @@ public class Solution {
 
     public static boolean getId(String text, String newID){
         boolean tr;
-        boolean rt;
         String id = text.substring(0, 8);
         id = id.trim();
         int y=0;
