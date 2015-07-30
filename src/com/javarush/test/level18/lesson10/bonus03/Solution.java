@@ -19,101 +19,75 @@ id productName price quantity
 Данные дополнены пробелами до их длины
 
 Пример:
-19846   Шорты пляжные синие           159.00  1221
-198478  Шорты пляжные черные с рисунко173.00  1755
+19846   Шорты пляжные синие           159.00  12
+198478  Шорты пляжные черные с рисунко173.00  17
 19847983Куртка для сноубордистов, разм10173.991234
 */
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Solution {
-    public static void main(String[] args) throws IOException {
-        BufferedReader rdr = new BufferedReader(new InputStreamReader(System.in));
-        String name = rdr.readLine();
-        RandomAccessFile raf = new RandomAccessFile(name,"rw");
-        if(args.length>0){
-            String s = ""; //для чтения файла
-            int asq = Integer.parseInt(args[1]);//парсим номер строки
 
-            if(args[0].equals("-u")){
-                //делаем строку из аргументов
-                String repl = "";
-                for(int i=2;i<args.length;i++){
-                    try {
-                        Double pa = Double.parseDouble(args[i]);
-                        if(repl.length()>30)repl=repl.substring(0,30);
-                        while (repl.length()<30){
-                            repl+=" ";
-                        }
-                        //цена
-                        String ptr = pa.toString();
-                        if(ptr.length()>8)   {
-                            System.out.println("Ошибка длинны аргумента");
-                            throw new IOException();
-                        }
-                        while (ptr.length()<8){
-                            ptr+=" ";
-                        }
-                        repl+=ptr;
-                        //кол-во
-                        ++i;
-                        String ptr2 = args[i];
-                        if(ptr2.length()>4){
-                            System.out.println("Ошибка длинны аргумента");
-                            throw new IOException();
-                        }
-                        while (ptr2.length()<4){
-                            ptr2+=" ";
-                        }
-                        repl+=ptr2;
-                    }catch (NumberFormatException e){
-                        if(i==2) repl+=args[i];
-                        else  repl+=" "+args[i];
-                    }
-                }
+    public static void main(String[] args) throws IOException
+    {
 
-                while ( (s=raf.readLine())!=null){
-                    try  {
-                        String id = s.substring(0, 8);
-                        id = id.trim();
-                        int num = Integer.parseInt(id);
-                        if (num == asq)  {
-                            raf.seek(raf.getFilePointer() - 44);
-                            raf.write(repl.getBytes());
-                        }
-                    }catch (NumberFormatException e){
-                    }catch (StringIndexOutOfBoundsException e){}
+        List<String> textFile = new ArrayList<>();
 
-                }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String nameFile = reader.readLine();
+        reader.close();
+        reader = new BufferedReader(new FileReader(nameFile));
+        while (true){
+            String text = reader.readLine();
+            if(text == null){
+                break;
             }
-            if(args[0].equals("-d")){
-                ArrayList<String> list = new ArrayList<>();
-                while ( (s=raf.readLine())!=null){
-                    try  {
-                        String id = s.substring(0, 8);
-                        id = id.trim();
-                        int num = Integer.parseInt(id);
-                        if (num != asq)  {
-                           byte x[] = s.getBytes("ISO-8859-1");
-                            String bgf = new String(x);
-                            list.add(bgf);
-                        }
-                    }catch (NumberFormatException e){
-                    }catch (StringIndexOutOfBoundsException e){}
-
-                }
-                PrintWriter x = new PrintWriter(new File(name));
-                for(String as : list)   {
-                    x.println(as);
-                }
-                x.close();
-            }
-
+            textFile.add(text);
         }
 
+        for (int i = 0; i < textFile.size(); i++) {
+            if ("-u".equals(args[0]) && args.length >= 5&& getId(textFile.get(i), args[1])){
+                textFile.set(i, updateProduct(args));
+            } else if ("-d".equals(args[0]) && args.length == 2 && getId(textFile.get(i), args[1])){
+                textFile.remove(i);
+            }
+        }
 
-        rdr.close();
-        raf.close();
+        reader.close();
+
+        OutputStream writer = new FileOutputStream(nameFile);
+        for (String aTextFile : textFile) {
+            writer.write(aTextFile.getBytes());
+            writer.write("\r\n".getBytes());
+        }
+        writer.flush();
+        writer.close();
+
+    }
+
+    public static boolean getId(String text, String newID){
+        boolean tr;
+        boolean rt;
+        String id = text.substring(0, 8);
+        id = id.trim();
+        int y=0;
+        try {
+            y = Integer.parseInt(id);
+            tr=true;
+        }catch (NumberFormatException e){  tr=false;  }
+         int x;
+        x = Integer.parseInt(newID);
+
+        return tr && x==y;
+    }
+
+    public static String updateProduct (String[] product) {
+        String nameProduct = product[2];
+        for (int i = 3; i < product.length - 2; i++) {
+            nameProduct += " " + product[i];
+        }
+        return String.format("%-8.8s%-30.30s%-8.8s%-4.4s", product[1], nameProduct, product[product.length - 2], product[product.length - 1]);
     }
 }
