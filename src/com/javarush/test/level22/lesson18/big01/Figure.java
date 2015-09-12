@@ -1,9 +1,9 @@
 package com.javarush.test.level22.lesson18.big01;
 
 public class Figure {
-    int x;
-    int y;
-    int[][]matrix;
+    private int x;
+    private int y;
+    private int[][]matrix;
 
     public Figure(int x, int y, int[][] matrix)
     {
