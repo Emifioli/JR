@@ -31,7 +31,7 @@ ADDED строка4
 */
 
 public class Solution {
-    public static List<LineItem> lines = new ArrayList<LineItem>();
+    public static List<LineItem> lines = new ArrayList<>();
 
     public static void main(String[] args) throws IOException
     {
@@ -42,41 +42,15 @@ public class Solution {
         BufferedReader reader2 = new BufferedReader(new FileReader(file2));
         ArrayList<String>file1List = new ArrayList<>();
         ArrayList<String>file2List = new ArrayList<>();
-        String str1 = "";
-        String str2 = "";
+        String str1;
+        String str2;
         while ( (str1=reader1.readLine())!=null){
             file1List.add(str1);
         }
         while ( (str2=reader2.readLine())!=null){
             file2List.add(str2);
         }
-         if(  ( file1List.size()*2+1 ) == file2List.size()  ){
-             for(int i=0;i<file2List.size();i++) {
-                 lines.add(new LineItem(Type.ADDED,file2List.get(i)));
-                 ++i;
-                 if(!(file2List.size()==i))
-                 lines.add(new LineItem(Type.SAME,file2List.get(i)));
-             }
-         }
-         if( file1List.size() == (file2List.size()/2) ){
-             if(file1List.get(0).equals(file2List.get(0))){
-                 for(int i=0;i<file2List.size();i++) {
-                     lines.add(new LineItem(Type.SAME,file2List.get(i)));
-                     i++;
-                     lines.add(new LineItem(Type.ADDED,file2List.get(i)));
-                 }
-             }
-             else {
-                 for(int i=0;i<file2List.size();i++) {
-                     lines.add(new LineItem(Type.ADDED,file2List.get(i)));
-                     ++i;
-                     lines.add(new LineItem(Type.SAME,file2List.get(i)));
-                 }
-             }
-
-         }
-
-
+        AddList(file1List,file2List);
 
         for(LineItem x : lines){
             System.out.println(x.type);
@@ -99,5 +73,37 @@ public class Solution {
             this.type = type;
             this.line = line;
         }
+    }
+    public static void AddList(ArrayList<String> q, ArrayList<String> w){
+        if(  ( q.size()*2+1 ) == w.size()  ){   //на макс
+            for(int i=0;i<w.size();i++) {
+                lines.add(new LineItem(Type.ADDED,w.get(i)));
+                ++i;
+                if(!(w.size()==i))
+                    lines.add(new LineItem(Type.SAME,w.get(i)));
+            }
+        }
+        if( q.size() == (w.size()/2) ){        //в два раза больше
+             for(int i=0,k=0;i<w.size();k++,i++){
+                 if(w.get(i).equals(q.get(k))){
+                     lines.add(new LineItem(Type.SAME,w.get(i)));
+                 }
+                 else{
+                     lines.add(new LineItem(Type.ADDED,w.get(i)));
+                     i++;
+                     lines.add(new LineItem(Type.SAME,w.get(i)));
+                     if(q.size()-1==k && w.size()-2==i)   {
+                         ++i;
+                         lines.add(new LineItem(Type.ADDED, w.get(i)));
+                     }
+                 }
+
+             }
+        }
+        if( q.size() == ( w.size() - 1)){
+
+        }
+
+
     }
 }
