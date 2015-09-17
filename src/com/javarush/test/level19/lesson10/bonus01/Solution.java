@@ -50,29 +50,36 @@ public class Solution {
         while ( (str2=reader2.readLine())!=null){
             file2List.add(str2);
         }
-        for(int i=0,k=0;i<file1List.size();i++,k++){
+         if(  ( file1List.size()*2+1 ) == file2List.size()  ){
+             for(int i=0;i<file2List.size();i++) {
+                 lines.add(new LineItem(Type.ADDED,file2List.get(i)));
+                 ++i;
+                 if(!(file2List.size()==i))
+                 lines.add(new LineItem(Type.SAME,file2List.get(i)));
+             }
+         }
+         if( file1List.size() == (file2List.size()/2) ){
+             if(file1List.get(0).equals(file2List.get(0))){
+                 for(int i=0;i<file2List.size();i++) {
+                     lines.add(new LineItem(Type.SAME,file2List.get(i)));
+                     i++;
+                     lines.add(new LineItem(Type.ADDED,file2List.get(i)));
+                 }
+             }
+             else {
+                 for(int i=0;i<file2List.size();i++) {
+                     lines.add(new LineItem(Type.ADDED,file2List.get(i)));
+                     ++i;
+                     lines.add(new LineItem(Type.SAME,file2List.get(i)));
+                 }
+             }
+
+         }
 
 
-            boolean x = file1List.get(i).equals(file2List.get(k));
-            boolean y = file1List.get(i).equals(file2List.get(k + 1));
-            boolean z = file1List.get(i + 1).equals(file2List.get(k));
 
-            if((x & y & z) || (x & !y & !z)) lines.add(new LineItem(Type.SAME,file1List.get(i)));
-            if(!x & !y & !z)break;
-            if((x & y & !z) || (!x & y & z) || (!x & y & !z)){
-                lines.add(new LineItem(Type.ADDED,file2List.get(k)));
-                lines.add(new LineItem(Type.SAME,file1List.get(i)));
-                ++k;
-            }
-            if(!x & !y & z){
-                lines.add(new LineItem(Type.REMOVED,file1List.get(i)));
-                lines.add(new LineItem(Type.SAME,file1List.get(i)));
-                ++i;
-            }
-
-        }
-        for(LineItem s : lines){
-            System.out.println(s.type + " " + s.line);
+        for(LineItem x : lines){
+            System.out.println(x.type);
         }
 
     }
