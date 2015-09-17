@@ -75,6 +75,7 @@ public class Solution {
         }
     }
     public static void AddList(ArrayList<String> q, ArrayList<String> w){
+
         if(  ( q.size()*2+1 ) == w.size()  ){   //на макс
             for(int i=0;i<w.size();i++) {
                 lines.add(new LineItem(Type.ADDED,w.get(i)));
@@ -87,12 +88,16 @@ public class Solution {
              for(int i=0,k=0;i<w.size();k++,i++){
                  if(w.get(i).equals(q.get(k))){
                      lines.add(new LineItem(Type.SAME,w.get(i)));
+                     if(q.size()-1==k & w.size()-2==i)   {
+                         ++i;
+                         lines.add(new LineItem(Type.ADDED, w.get(i)));
+                     }
                  }
                  else{
                      lines.add(new LineItem(Type.ADDED,w.get(i)));
                      i++;
                      lines.add(new LineItem(Type.SAME,w.get(i)));
-                     if(q.size()-1==k && w.size()-2==i)   {
+                     if(q.size()-1==k & w.size()-2==i)   {
                          ++i;
                          lines.add(new LineItem(Type.ADDED, w.get(i)));
                      }
@@ -100,7 +105,7 @@ public class Solution {
 
              }
         }
-        if( q.size() == ( w.size() - 1)){
+        if( q.size() <  w.size() && w.size()<(q.size()*2)){
 
         }
 
