@@ -53,7 +53,7 @@ public class Solution {
         AddList(file1List,file2List);
 
         for(LineItem x : lines){
-            System.out.println(x.type);
+            System.out.println(x.type + " - " + x.line);
         }
 
     }
@@ -88,25 +88,53 @@ public class Solution {
              for(int i=0,k=0;i<w.size();k++,i++){
                  if(w.get(i).equals(q.get(k))){
                      lines.add(new LineItem(Type.SAME,w.get(i)));
-                     if(q.size()-1==k & w.size()-2==i)   {
-                         ++i;
-                         lines.add(new LineItem(Type.ADDED, w.get(i)));
-                     }
                  }
                  else{
                      lines.add(new LineItem(Type.ADDED,w.get(i)));
-                     i++;
+                     ++i;
                      lines.add(new LineItem(Type.SAME,w.get(i)));
-                     if(q.size()-1==k & w.size()-2==i)   {
-                         ++i;
-                         lines.add(new LineItem(Type.ADDED, w.get(i)));
-                     }
+                 }
+                 if(q.size()-1==k & w.size()-2==i)   {
+                     ++i;
+                     lines.add(new LineItem(Type.ADDED, w.get(i)));
                  }
 
              }
         }
-        if( q.size() <  w.size() && w.size()<(q.size()*2)){
+        if( q.size() <  w.size() && w.size()<(q.size()*2) ){
+            for(int i=0,k=0;i<w.size();k++,i++)
+            {
+                if (w.get(i).equals(q.get(k)))
+                {
+                    lines.add(new LineItem(Type.SAME, w.get(i)));
+                }else
+                {
+                    if (k != q.size() - 1)
+                    {
+                        if (w.get(i).equals(q.get(k + 1)))
+                        {
+                            lines.add(new LineItem(Type.REMOVED, q.get(k)));
+                            lines.add(new LineItem(Type.SAME, q.get(k + 1)));
+                            ++k;
+                        } else
+                        {
+                            lines.add(new LineItem(Type.ADDED, w.get(i)));
+                            lines.add(new LineItem(Type.SAME, w.get(i + 1)));
+                            ++i;
+                        }
+                    }else
+                    {
+                        lines.add(new LineItem(Type.ADDED, w.get(i)));
+                        lines.add(new LineItem(Type.SAME, w.get(i + 1)));
+                        ++i;
+                    }
 
+                }
+                if(q.size()-1==k & w.size()-2==i)   {
+                    ++i;
+                    lines.add(new LineItem(Type.ADDED, w.get(i)));
+                }
+            }
         }
 
 
