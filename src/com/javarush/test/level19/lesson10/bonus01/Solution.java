@@ -30,7 +30,8 @@ SAME строка3
 ADDED строка4
 */
 
-public class Solution {
+public class Solution
+{
     public static List<LineItem> lines = new ArrayList<>();
 
     public static void main(String[] args) throws IOException
@@ -40,103 +41,138 @@ public class Solution {
         String file2 = reader.readLine();
         BufferedReader reader1 = new BufferedReader(new FileReader(file1));
         BufferedReader reader2 = new BufferedReader(new FileReader(file2));
-        ArrayList<String>file1List = new ArrayList<>();
-        ArrayList<String>file2List = new ArrayList<>();
+        ArrayList<String> file1List = new ArrayList<>();
+        ArrayList<String> file2List = new ArrayList<>();
         String str1;
         String str2;
-        while ( (str1=reader1.readLine())!=null){
+        while ((str1 = reader1.readLine()) != null)
+        {
             file1List.add(str1);
         }
-        while ( (str2=reader2.readLine())!=null){
+        while ((str2 = reader2.readLine()) != null)
+        {
             file2List.add(str2);
         }
-        AddList(file1List,file2List);
+        AddList(file1List, file2List);
 
-        for(LineItem x : lines){
+        for (LineItem x : lines)
+        {
             System.out.println(x.type + " - " + x.line);
         }
 
     }
 
 
-    public static enum Type {
+    public static enum Type
+    {
         ADDED,        //добавлена новая строка
         REMOVED,      //удалена строка
         SAME          //без изменений
     }
 
-    public static class LineItem {
+    public static class LineItem
+    {
         public Type type;
         public String line;
 
-        public LineItem(Type type, String line) {
+        public LineItem(Type type, String line)
+        {
             this.type = type;
             this.line = line;
         }
     }
-    public static void AddList(ArrayList<String> q, ArrayList<String> w){
 
-        if(  ( q.size()*2+1 ) == w.size()  ){   //на макс
-            for(int i=0;i<w.size();i++) {
-                lines.add(new LineItem(Type.ADDED,w.get(i)));
+    public static void AddList(ArrayList<String> q, ArrayList<String> w)
+    {
+
+        if ((q.size() * 2 + 1) == w.size())
+        {   //на макс
+            for (int i = 0; i < w.size(); i++)
+            {
+                lines.add(new LineItem(Type.ADDED, w.get(i)));
                 ++i;
-                if(!(w.size()==i))
-                    lines.add(new LineItem(Type.SAME,w.get(i)));
+                if (!(w.size() == i))
+                    lines.add(new LineItem(Type.SAME, w.get(i)));
             }
         }
-        if( q.size() == (w.size()/2) ){        //в два раза больше
-             for(int i=0,k=0;i<w.size();k++,i++){
-                 if(w.get(i).equals(q.get(k))){
-                     lines.add(new LineItem(Type.SAME,w.get(i)));
-                 }
-                 else{
-                     lines.add(new LineItem(Type.ADDED,w.get(i)));
-                     ++i;
-                     lines.add(new LineItem(Type.SAME,w.get(i)));
-                 }
-                 if(q.size()-1==k & w.size()-2==i)   {
-                     ++i;
-                     lines.add(new LineItem(Type.ADDED, w.get(i)));
-                 }
-
-             }
-        }
-        if( q.size() <  w.size() && w.size()<(q.size()*2) ){
-            for(int i=0,k=0;i<w.size();k++,i++)
+        if ( (q.size()*2) == w.size())
+        {        //в два раза больше
+            for (int i = 0, k = 0; i < w.size(); k++, i++)
             {
                 if (w.get(i).equals(q.get(k)))
                 {
                     lines.add(new LineItem(Type.SAME, w.get(i)));
-                }else
+                } else
                 {
-                    if (k != q.size() - 1)
-                    {
-                        if (w.get(i).equals(q.get(k + 1)))
-                        {
-                            lines.add(new LineItem(Type.REMOVED, q.get(k)));
-                            lines.add(new LineItem(Type.SAME, q.get(k + 1)));
-                            ++k;
-                        } else
-                        {
-                            lines.add(new LineItem(Type.ADDED, w.get(i)));
-                            lines.add(new LineItem(Type.SAME, w.get(i + 1)));
-                            ++i;
-                        }
-                    }else
-                    {
-                        lines.add(new LineItem(Type.ADDED, w.get(i)));
-                        lines.add(new LineItem(Type.SAME, w.get(i + 1)));
-                        ++i;
-                    }
-
+                    lines.add(new LineItem(Type.ADDED, w.get(i)));
+                    ++i;
+                    lines.add(new LineItem(Type.SAME, w.get(i)));
                 }
-                if(q.size()-1==k & w.size()-2==i)   {
+                if (q.size() - 1 == k & w.size() - 2 == i)
+                {
                     ++i;
                     lines.add(new LineItem(Type.ADDED, w.get(i)));
                 }
+
             }
         }
+        if (q.size() < w.size() && w.size() < (q.size() * 2))
+        {
+            boolean maxQ = false;
+            boolean maxW = false;
+            for (int i = 0, k = 0; i < w.size(); k++, i++){
+                if(q.size()-1<=k)maxQ=true;
+                if(w.size()-1<=i)maxW=true;
 
-
+                if(!maxQ & !maxW){
+                  if (w.get(i).equals(q.get(k)))
+                  {
+                      lines.add(new LineItem(Type.SAME, w.get(i)));
+                  }else {
+                           if(w.get(i).equals(q.get(k+1))){
+                               lines.add(new LineItem(Type.REMOVED, q.get(k)));
+                               lines.add(new LineItem(Type.SAME, q.get(k+1)));
+                               ++k;
+                               if(k==q.size()-1)--k;
+                           }else{
+                               lines.add(new LineItem(Type.ADDED, w.get(i)));
+                               lines.add(new LineItem(Type.SAME, w.get(i+1)));
+                               ++i;
+                               if(i==w.size()-1)--i;
+                           }
+                  }
+                }else {
+                    if(maxQ & !maxW){
+                        if (w.get(i).equals(q.get(k)))
+                        {
+                            lines.add(new LineItem(Type.SAME, w.get(i)));
+                            lines.add(new LineItem(Type.ADDED, w.get(i+1)));
+                            break;
+                        }else {
+                            lines.add(new LineItem(Type.ADDED, w.get(i)));
+                            lines.add(new LineItem(Type.SAME, w.get(i+1)));
+                            ++i;
+                            if(i==w.size()-1)
+                            {
+                                break;
+                            }else {
+                                lines.add(new LineItem(Type.ADDED, w.get(i)));
+                                break;
+                            }
+                        }
+                    }
+                    if(maxW & !maxQ){
+                    }
+                    if(maxQ & maxW){
+                        if (w.get(i).equals(q.get(k)))
+                        {
+                            lines.add(new LineItem(Type.SAME, w.get(i)));
+                        }
+                        else
+                            lines.add(new LineItem(Type.ADDED, w.get(i)));
+                    }
+                }
+            }
+        }
     }
 }
