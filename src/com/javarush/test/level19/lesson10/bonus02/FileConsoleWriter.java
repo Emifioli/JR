@@ -38,4 +38,26 @@ public class FileConsoleWriter extends FileWriter
     {
         super(fileName, append);
     }
+
+    @Override
+    public void write(int c) throws IOException
+    {
+        char[] var2 = new char[]{(char)c};
+        this.write(var2, 0, 1);
+    }
+
+    @Override
+    public void write(char[] cbuf, int off, int len) throws IOException
+    {
+        String x = new String(cbuf,off,len);
+        write(x);
+    }
+
+    @Override
+    public void write(String str, int off, int len) throws IOException
+    {
+        String x = new String(str.toCharArray(),off,len);
+        System.out.print(x);
+        super.write(str, off, len);
+    }
 }
