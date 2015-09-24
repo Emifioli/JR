@@ -17,7 +17,7 @@ getNumbers должен возвращать все такие числа в п�
 */
 public class Solution {
     public static int[] getNumbers(int N) {
-        int[] result = null;
+        int[] result;
 
         ArrayList<Integer>itog = new ArrayList<>();
         for(int i=1;i<N;i++)
@@ -41,8 +41,6 @@ public class Solution {
 
         return result;
     }
-
-
 
     static int[] OneN(int u){
         int digits=0;
