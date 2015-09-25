@@ -39,11 +39,12 @@ public class Solution {
                         if(i>0)Hnum=a[i-1][k];
                         if (num == 1)
                         {
-
                             if (!kub & !(Hnum==1)) count++;
                             kub = true;
                         }else kub = false;
+                        if(k==width-1)kub = false;
                     }
+
                 }
             }
         return count;
