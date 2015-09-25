@@ -21,7 +21,9 @@ public class Solution {
                 {'m', 'l', 'p', 'r', 'r', 'h'},
                 {'p', 'o', 'e', 'e', 'j', 'j'}
         };
-        detectAllWords(crossword, "home", "same");
+        List<Word>lw =   detectAllWords(crossword, "home", "same");
+        for(Word x : lw)
+            System.out.println(x);
         /*
 Ожидаемый результат
 home - (5, 3) - (2, 0)
@@ -29,8 +31,49 @@ same - (1, 1) - (4, 1)
          */
     }
 
-    public static List<Word> detectAllWords(int[][] crossword, String... words) {
+    public static List<Word> detectAllWords(int[][] crossword, final String... words) {
         List<Word>lw = new ArrayList<>();
+
+        class Perebor{
+            private String word;
+            private int x[][];
+            private int a;
+            private int b;
+            private int a1;
+            private int b1;
+            public boolean m1;
+
+            public Perebor(int a, int b,String word, int[][] x)
+            {
+                this.a = a;
+                this.b = b;
+                this.word = word;
+                this.x = x;
+                m1=method1();
+            }
+            public boolean method1(){
+                boolean qwe=false;
+                for(int i=1;i<word.length();i++){
+                    int buk = word.charAt(i);
+                    int mtr = x[a-i][b-i];
+                    if(buk==mtr)qwe= true;
+                    else qwe= false;
+                    if(i==word.length()-1){
+                        a1=a-i;
+                        b1=b-i;
+                    }
+                }
+                return qwe;
+            }
+            public Word getZxc(){
+                Word zxc;
+                    zxc = new Word(word);
+                    zxc.setStartPoint(b,a);
+                    zxc.setEndPoint(b1,a1);
+
+                return zxc;
+            }
+        }
 
         for (String slovo : words)
         {
@@ -45,8 +88,13 @@ same - (1, 1) - (4, 1)
                     int iks = crossword[i][k];
                     if (a == iks)
                     {
-                        if ((i - SL) >= 0)
+                        //left and up
+                        if ( ((i - SL) >= 0 ) && ((k - SL) >= 0) )
                         {
+                            Perebor p = new Perebor(i,k,slovo,crossword);
+                            if(p.method1()){
+                                lw.add(p.getZxc());
+                            }
                         }
                         if ((i + SL) <= crossword.length)
                         {
@@ -59,35 +107,6 @@ same - (1, 1) - (4, 1)
                         }
                     }
                 }
-            }
-        }
-        class Perebor{
-            private String word;
-            private  int x[][];
-            private boolean result;
-            private int a;
-            private int b;
-
-            public Perebor(int a, int b,String word, int[][] x)
-            {
-                this.a = a;
-                this.b = b;
-                this.word = word;
-                this.x = x;
-            }
-
-            public boolean isResult()
-            {
-                return result;
-            }
-            private boolean method1(){
-                for(int i=1;i<word.length()-1;i++){
-                    int buk = word.charAt(i);
-                    int mtr = x[a-i][b-i];
-                    if(buk==mtr)return true;
-                    else return false;
-                }
-                return false;
             }
         }
 
