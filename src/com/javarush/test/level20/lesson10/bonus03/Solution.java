@@ -61,6 +61,35 @@ same - (1, 1) - (4, 1)
                 }
             }
         }
+        class Perebor{
+            private String word;
+            private  int x[][];
+            private boolean result;
+            private int a;
+            private int b;
+
+            public Perebor(int a, int b,String word, int[][] x)
+            {
+                this.a = a;
+                this.b = b;
+                this.word = word;
+                this.x = x;
+            }
+
+            public boolean isResult()
+            {
+                return result;
+            }
+            private boolean method1(){
+                for(int i=1;i<word.length()-1;i++){
+                    int buk = word.charAt(i);
+                    int mtr = x[a-i][b-i];
+                    if(buk==mtr)return true;
+                    else return false;
+                }
+                return false;
+            }
+        }
 
         return lw;
     }
