@@ -21,7 +21,7 @@ public class Solution {
                 {'m', 'l', 'p', 'r', 'r', 'h'},
                 {'p', 'o', 'e', 'e', 'j', 'j'}
         };
-        List<Word>lw =   detectAllWords(crossword, "home", "same","lo");
+        List<Word>lw =   detectAllWords(crossword, "home", "same");
         for(Word x : lw)
             System.out.println(x);
         /*
@@ -129,6 +129,32 @@ same - (1, 1) - (4, 1)
                 }
                 return qwe;
             }
+            public boolean method7(){
+                boolean qwe=true;
+                for(int i=1;i<word.length();i++){
+                    int buk = word.charAt(i);
+                    int mtr = x[a][b+i];
+                    if(buk!=mtr)qwe = false;
+                    if(i==word.length()-1){
+                        a1=a;
+                        b1=b+i;
+                    }
+                }
+                return qwe;
+            }
+            public boolean method8(){
+                boolean qwe=true;
+                for(int i=1;i<word.length();i++){
+                    int buk = word.charAt(i);
+                    int mtr = x[a][b-i];
+                    if(buk!=mtr)qwe = false;
+                    if(i==word.length()-1){
+                        a1=a;
+                        b1=b-i;
+                    }
+                }
+                return qwe;
+            }
             public Word getZxc(){
                 Word zxc;
                     zxc = new Word(word);
@@ -190,9 +216,15 @@ same - (1, 1) - (4, 1)
                         }
                         if ((k - SL) >= 0)
                         {
+                            Perebor p = new Perebor(i,k,slovo,crossword);
+                            if(p.method8())
+                                lw.add(p.getZxc());
                         }
-                        if ((k + SL) <= crossword[i].length)
+                        if ((k + SL) < crossword[i].length)
                         {
+                            Perebor p = new Perebor(i,k,slovo,crossword);
+                            if(p.method7())
+                                lw.add(p.getZxc());
                         }
                     }
                 }
