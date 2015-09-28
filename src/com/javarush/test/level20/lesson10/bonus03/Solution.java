@@ -21,7 +21,7 @@ public class Solution {
                 {'m', 'l', 'p', 'r', 'r', 'h'},
                 {'p', 'o', 'e', 'e', 'j', 'j'}
         };
-        List<Word>lw =   detectAllWords(crossword, "home", "same","plg");
+        List<Word>lw =   detectAllWords(crossword, "home", "same","rr");
         for(Word x : lw)
             System.out.println(x);
         /*
@@ -74,7 +74,7 @@ same - (1, 1) - (4, 1)
                     else qwe= false;
                     if(i==word.length()-1){
                         a1=a-i;
-                        b1=b-i;
+                        b1=b+i;
                     }
                 }
                 return qwe;
@@ -88,7 +88,7 @@ same - (1, 1) - (4, 1)
                     else qwe = false;
                     if(i==word.length()-1){
                         a1=a-i;
-                        b1=b-i;
+                        b1=b;
                     }
                 }
                 return qwe;
