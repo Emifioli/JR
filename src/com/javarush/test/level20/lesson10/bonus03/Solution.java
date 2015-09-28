@@ -21,7 +21,7 @@ public class Solution {
                 {'m', 'l', 'p', 'r', 'r', 'h'},
                 {'p', 'o', 'e', 'e', 'j', 'j'}
         };
-        List<Word>lw =   detectAllWords(crossword, "home", "same","rr");
+        List<Word>lw =   detectAllWords(crossword, "home", "same","lo");
         for(Word x : lw)
             System.out.println(x);
         /*
@@ -52,12 +52,11 @@ same - (1, 1) - (4, 1)
 
             }
             public boolean method1(){
-                boolean qwe=false;
+                boolean qwe=true;
                 for(int i=1;i<word.length();i++){
                     int buk = word.charAt(i);
                     int mtr = x[a-i][b-i];
-                    if(buk==mtr) qwe = true;
-                    else qwe= false;
+                    if(buk!=mtr) qwe = false;
                     if(i==word.length()-1){
                         a1=a-i;
                         b1=b-i;
@@ -66,12 +65,11 @@ same - (1, 1) - (4, 1)
                 return qwe;
             }
             public boolean method2(){
-                boolean qwe=false;
+                boolean qwe=true;
                 for(int i=1;i<word.length();i++){
                     int buk = word.charAt(i);
                     int mtr = x[a-i][b+i];
-                    if(buk==mtr)qwe = true;
-                    else qwe= false;
+                    if(buk!=mtr)qwe = false;
                     if(i==word.length()-1){
                         a1=a-i;
                         b1=b+i;
@@ -80,14 +78,52 @@ same - (1, 1) - (4, 1)
                 return qwe;
             }
             public boolean method3(){
-                boolean qwe=false;
+                boolean qwe=true;
                 for(int i=1;i<word.length();i++){
                     int buk = word.charAt(i);
                     int mtr = x[a-i][b];
-                    if(buk==mtr)qwe = true;
-                    else qwe = false;
+                    if(buk!=mtr)qwe = false;
                     if(i==word.length()-1){
                         a1=a-i;
+                        b1=b;
+                    }
+                }
+                return qwe;
+            }
+            public boolean method4(){
+                boolean qwe=true;
+                for(int i=1;i<word.length();i++){
+                    int buk = word.charAt(i);
+                    int mtr = x[a+i][b-i];
+                    if(buk!=mtr) qwe = false;
+                    if(i==word.length()-1){
+                        a1=a+i;
+                        b1=b-i;
+                    }
+                }
+                return qwe;
+            }
+            public boolean method5(){
+                boolean qwe=true;
+                for(int i=1;i<word.length();i++){
+                    int buk = word.charAt(i);
+                    int mtr = x[a+i][b+i];
+                    if(buk!=mtr)qwe = false;
+                    if(i==word.length()-1){
+                        a1=a+i;
+                        b1=b+i;
+                    }
+                }
+                return qwe;
+            }
+            public boolean method6(){
+                boolean qwe=true;
+                for(int i=1;i<word.length();i++){
+                    int buk = word.charAt(i);
+                    int mtr = x[a+i][b];
+                    if(buk!=mtr)qwe = false;
+                    if(i==word.length()-1){
+                        a1=a+i;
                         b1=b;
                     }
                 }
@@ -124,7 +160,7 @@ same - (1, 1) - (4, 1)
                                   if(p.method1())
                                       lw.add(p.getZxc());
                             }
-                            if((k + SL) <= crossword[i].length){
+                            if((k + SL) < crossword[i].length){
                                 Perebor p = new Perebor(i,k,slovo,crossword);
                                 if(p.method2())
                                     lw.add(p.getZxc());
@@ -136,8 +172,21 @@ same - (1, 1) - (4, 1)
                         }
 
 
-                        if ((i + SL) <= crossword.length)
+                        if ((i + SL) < crossword.length)
                         {
+                            if((k - SL) >= 0){
+                                Perebor p = new Perebor(i,k,slovo,crossword);
+                                if(p.method4())
+                                    lw.add(p.getZxc());
+                            }
+                            if((k + SL) < crossword[i].length){
+                                Perebor p = new Perebor(i,k,slovo,crossword);
+                                   if(p.method5())
+                                      lw.add(p.getZxc());
+                            }
+                            Perebor p = new Perebor(i, k, slovo, crossword);
+                               if (p.method6())
+                                   lw.add(p.getZxc());
                         }
                         if ((k - SL) >= 0)
                         {
